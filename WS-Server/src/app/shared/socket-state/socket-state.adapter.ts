@@ -69,9 +69,11 @@ export class SocketStateAdapter extends IoAdapter implements WebSocketAdapter {
     server.on('connection', (socket: AuthenticatedSocket) => {
       if (socket.auth) {
         if (this.socketStateService.get(socket.auth.chatId)?.length >= 2) {
+          console.log('invalid connection attempt');
           socket.disconnect();
           return;
         }
+        console.log('user connected');
         this.socketStateService.add(socket.auth.chatId, socket);
         
         const uuid = uuidv5(socket.auth.chatId, this.configService.get<string>('NAMESPACE'));
@@ -95,43 +97,4 @@ export class SocketStateAdapter extends IoAdapter implements WebSocketAdapter {
     });
   }
 
-  public bindMessageHandlers(
-    client: any,
-    handlers: MessageMappingProperties[],
-    transform: (data: any) => Observable<any>,
-  ): void {
-    const close$ = fromEvent(client, CLOSE_EVENT).pipe(share(), first());
-    const source$ = fromEvent(client, 'message').pipe(
-      mergeMap(data =>
-        this.bindMessageHandler(data, handlers, transform).pipe(
-          filter(result => result),
-        ),
-      ),
-      takeUntil(close$),
-    );
-    const onMessage = (response: any): void => {
-      if (client.readyState !== READY_STATE.OPEN_STATE) {
-        return;
-      }
-      client.send(JSON.stringify(response));
-    };
-    source$.subscribe(onMessage);
-  }
-
-  public bindMessageHandler(
-    buffer: any,
-    handlers: MessageMappingProperties[],
-    transform: (data: any) => Observable<any>,
-  ): Observable<any> {
-    try {
-      const message = JSON.parse(buffer.data);
-      const messageHandler = handlers.find(
-        handler => handler.message === message.event,
-      );
-      const { callback } = messageHandler;
-      return transform(callback(message.data));
-    } catch {
-      return EMPTY;
-    }
-  }
 }

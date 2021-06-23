@@ -1,0 +1,22 @@
+<div class="chat-messages">
+  <div class="chat-messages-show-container">
+    <ul class="chat-messages-show-list">
+      <ng-container *ngFor="let msg of messageList">
+        <div class="row justify-content-end" *ngIf="msg.sender === 0">
+          <li style="background: white; padding: 15px 30px; margin: 10px; width: 200px;">
+            {{msg.message}}
+          </li>
+        </div>
+        <div class="row" *ngIf="msg.sender === 1">
+          <li style="background: white; padding: 15px 30px; margin: 10px; width: 200px;">
+            {{msg.message}}
+          </li>
+        </div>
+      </ng-container>
+    </ul>
+  </div>
+  <div class="chat-messages-create-container">
+    <input class="chat-messages-create-input" type="text" [(ngModel)]="message">
+    <button class="chat-messages-create-button" (click)="sendMessage()"> Send </button>
+  </div>
+</div>

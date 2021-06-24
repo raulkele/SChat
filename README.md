@@ -17,6 +17,8 @@ If no specific chatId is chosen, the application generates a unique id that can 
 
 ## Installation
 
+In order for the websocket server to work ,you will need to create an .env file, use the .env.example file as an example
+
 If you wish to host the application, clone the repository and run 
 ```bash
 cd WS-Server

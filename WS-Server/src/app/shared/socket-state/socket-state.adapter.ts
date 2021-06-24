@@ -7,13 +7,7 @@ import { RedisPropagatorService } from '@app/shared/redis-propagator/redis-propa
 import { SocketStateService } from './socket-state.service';
 import { v5 as uuidv5 } from 'uuid';
 import { ConfigService } from '@nestjs/config';
-import { MessageMappingProperties } from '@nestjs/websockets';
-import { Observable, fromEvent, EMPTY } from 'rxjs';
-import { share, first, mergeMap, filter, takeUntil } from 'rxjs/operators';
 
-import {
-  CLOSE_EVENT,
-} from '@nestjs/websockets/constants';
 
 enum READY_STATE {
   CONNECTING_STATE = 0,
@@ -77,7 +71,6 @@ export class SocketStateAdapter extends IoAdapter implements WebSocketAdapter {
         this.socketStateService.add(socket.auth.chatId, socket);
         
         const uuid = uuidv5(socket.auth.chatId, this.configService.get<string>('NAMESPACE'));
-        console.log(`For chat: ${socket.auth.chatId}, key is: ${uuid}`);
         socket.emit('key', uuid);
         const chatMembers = this.socketStateService.get(socket.auth.chatId);
         chatMembers.forEach(socket => {

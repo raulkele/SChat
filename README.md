@@ -19,10 +19,17 @@ If no specific chatId is chosen, the application generates a unique id that can 
 
 If you wish to host the application, clone the repository and run 
 ```bash
+cd WS-Server
 docker-compose up
 ```
-in the project root.
+in the project root to build the back-end.
 
+For the front-end run
+```bash
+cd WS-Client/SChat
+npm i
+npm start
+```
 ## Structure
 
 ### System Context Diagram

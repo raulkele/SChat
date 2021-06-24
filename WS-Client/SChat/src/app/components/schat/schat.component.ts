@@ -37,5 +37,6 @@ export class SchatComponent implements OnInit {
 
   public sendMessage(): void {
     this.sChatService.sendMessage(this.message);
+    this.message = '';
   }
 }

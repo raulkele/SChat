@@ -67,7 +67,6 @@ export class SocketStateAdapter extends IoAdapter implements WebSocketAdapter {
           socket.disconnect();
           return;
         }
-        console.log('user connected');
         this.socketStateService.add(socket.auth.chatId, socket);
         
         const uuid = uuidv5(socket.auth.chatId, this.configService.get<string>('NAMESPACE'));

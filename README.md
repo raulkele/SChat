@@ -5,7 +5,7 @@ SChat is an application that provides a no-setup, spontaneous and anonymous chat
 
 SChat uses a websocket server that acts as a relay between clients. 
 
-On initial connection, users receive a uniquely generated private key that is used in order to encrypt and decrypt messages sent between parties. The server acts only as a message pasing relay and does not keep any records of the messages transmitted or the keys to decrpyt them.
+On initial connection, users receive a uniquely generated private key that is used in order to encrypt and decrypt messages sent between parties. The server acts only as a message passing relay and does not keep any records of the messages transmitted or the keys to decrpyt them.
 
 All messages sent or received are kept strictly client-side in memory, and are not recorded in any type of local storage. Once you close the window, all messages are lost.
 
